@@ -1,27 +1,42 @@
 import React, { useContext } from 'react';
-import { CartContext } from '../../contexts/CartContext';
-import { FormContext } from '../../contexts/FormContext';
+import './Order.css';
+import { CartContext} from '../../contexts/CartContext';
+import { FormContext} from '../../contexts/FormContext';
 
 const Order = () => {
   const { cart } = useContext(CartContext);
   const { formData } = useContext(FormContext);
 
   return (
-    <div>
+    <div className="order-container">
       <h1>Bon de Commande</h1>
-      <h2>Récapitulatif du panier</h2>
-      {cart.map(product => (
-        <div key={product.id}>
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
-        </div>
-      ))}
-      <h2>Informations de livraison</h2>
-      <p>Nom: {formData.name}</p>
-      <p>Email: {formData.email}</p>
-      <p>Adresse: {formData.address}</p>
-      <p>Commentaire: {formData.comment}</p>
+      <div className="order-item">
+        <h3>Informations client</h3>
+        <p>
+          <span>Nom : </span>
+          {formData.name}
+        </p>
+        <p>
+          <span>Email : </span>
+          {formData.email}
+        </p>
+        <p>
+          <span>Adresse : </span>
+          {formData.address}
+        </p>
+        <p>
+          <span>Commentaire : </span>
+          {formData.comment}
+        </p>
+      </div>
+      <div className="order-item">
+        <h3>Récapitulatif de la commande</h3>
+        {cart.map(product => (
+          <p key={product.id}>
+            {product.name} - {product.price}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };

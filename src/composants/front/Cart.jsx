@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../../contexts/CartContext';
 import { FormContext } from '../../contexts/FormContext';
+import './Cart.css';
+
 
 const Cart = () => {
 
@@ -19,37 +21,65 @@ const Cart = () => {
     // Envoi des données du formulaire à l'API ou traitement des données
   }
   return (
-    <div>
-      <h1>Mon panier</h1>
-      {cart.map(product => (
-        <div key={product.id}>
+    <div className="cart-container">
+      
+      <h1>Votre panier</h1>
+
+<form onSubmit={handleSubmit}>
+        <label>Nom :</label>
+        <input
+            className="form-control"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={e => setFormData({ ...formData, name: e.target.value })}
+            required
+        />
+        <label>Email :</label>
+        <input
+            className="form-control"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={e => setFormData({ ...formData, email: e.target.value })}
+            required
+        />
+        <label>Adresse :</label>
+        <input
+            className="form-control"
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={e => setFormData({ ...formData, address: e.target.value })}
+            required
+        />
+        <label>Commentaire :</label>
+        <textarea
+            className="form-control"
+            name="comment"
+            value={formData.comment}
+            onChange={e => setFormData({ ...formData, comment: e.target.value })}
+            required
+            ></textarea>
+            <input type="submit" value="Commander"/>
+            </form>
+
+            {cart.map(product => (
+        <div className="cart-item" key={product.id}>
           <h3>{product.name}</h3>
           <p>{product.description}</p>
-          <p>{product.price}</p>
-          <button onClick={() => removeFromCart(product.id)}>Supprimer</button>
+          <p className = "cart-item">{product.price}</p>
+          <button className = "cart-item button" onClick={() => removeFromCart(product.id) }>Supprimer</button>
         </div>
       ))}
 
-<form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Nom:</label>
-          <input type="text" id="name" name="name" onChange={handleChange} value={formData.name}/>
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" onChange={handleChange} value={formData.email}/>
-        </div>
-        <div>
-          <label htmlFor="address">Adresse:</label>
-          <input type="text" id="address" name="address" onChange={handleChange} value={formData.address}/>
-        </div>
-        <div>
-          <label htmlFor="comment">Commentaire:</label>
-          <textarea id="comment" name="comment" onChange={handleChange} value={formData.comment}/>
-        </div>
-        <button type="submit">Envoyer</button>
-      </form>
+
     </div>
+
+
+
+
+
   );
 };
 export default Cart;
